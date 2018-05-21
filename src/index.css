@@ -1,0 +1,71 @@
+.navbar-active {
+  color: black;
+  background: white;
+  width: 107%;
+}
+
+.navbar-active:hover {
+  color: black;
+  background: white;
+  width: 107%;
+}
+
+.navbar-inactive {
+  color: white;
+}
+
+.navbar-inactive:hover {
+  color: black;
+  background: white;
+  width: 107%;
+}
+
+span {
+  margin-left: 10px;
+}
+ 
+.btn-purple { 
+  color: #6D71EF; 
+  background-color: #FFFFFF; 
+  border-color: #6D71EF; 
+} 
+ 
+.btn-purple:hover, 
+.btn-purple:focus, 
+.btn-purple:active, 
+.btn-purple.active, 
+.open .dropdown-toggle.btn-purple { 
+  color: #FFFFFF; 
+  background-color: #6D71EF; 
+  border-color: #6D71EF; 
+} 
+ 
+.btn-purple:active, 
+.btn-purple.active, 
+.open .dropdown-toggle.btn-purple { 
+  background-image: none; 
+} 
+ 
+.btn-purple.disabled, 
+.btn-purple[disabled], 
+fieldset[disabled] .btn-purple, 
+.btn-purple.disabled:hover, 
+.btn-purple[disabled]:hover, 
+fieldset[disabled] .btn-purple:hover, 
+.btn-purple.disabled:focus, 
+.btn-purple[disabled]:focus, 
+fieldset[disabled] .btn-purple:focus, 
+.btn-purple.disabled:active, 
+.btn-purple[disabled]:active, 
+fieldset[disabled] .btn-purple:active, 
+.btn-purple.disabled.active, 
+.btn-purple[disabled].active, 
+fieldset[disabled] .btn-purple.active { 
+  background-color: #FFFFFF; 
+  border-color: #6D71EF; 
+} 
+ 
+.btn-purple .badge { 
+  color: #FFFFFF; 
+  background-color: #6D71EF; 
+}
