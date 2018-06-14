@@ -19,16 +19,19 @@ export default class ProductForm extends Component {
                 brand: '',
                 description: '',
                 price: '',
-                category: {
-
-                }
+                category: {},
+                image: null
             },
             categories: [],
+            file: '', 
+            imagePreviewUrl: '',
             edit: params.edit === undefined && params.id !== undefined
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.getById = this.getById.bind(this);
+
+        this._handleImageChange = this._handleImageChange.bind(this);
 
         this.redirectToEdit = this.redirectToEdit.bind(this);
         this.genericChange = this.genericChange.bind(this);
@@ -46,7 +49,7 @@ export default class ProductForm extends Component {
     }
 
     handleSubmit(event, errors, values) {
-        if(errors.length === 0) {
+        if (errors.length === 0) {
             axios.post(`${URL}/product`, this.state.product)
                 .then(resp => this.props.history.push('/products'));
         }
@@ -74,12 +77,38 @@ export default class ProductForm extends Component {
     }
 
     genericChange(index, value) {
-        let {product} = this.state;
+        let { product } = this.state;
         product[index] = value;
-        this.setState({product});        
+        this.setState({ product });
+    }
+
+    _handleImageChange(e) {
+        e.preventDefault();
+
+        let reader = new FileReader();
+        let file = e.target.files[0];
+
+        reader.onloadend = () => {
+            this.setState({
+                file: file,
+                imagePreviewUrl: reader.result
+            });
+        }
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
     }
 
     render() {
+        let { imagePreviewUrl } = this.state;
+        let $imagePreview = null;
+        if (imagePreviewUrl) {
+            $imagePreview = (<img src={imagePreviewUrl} style={{textAlign: 'center', margin: '5px 15px', height: '200px', width: '400px'}} />);
+        } else {
+            $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
+        }
+
         return (
             <div>
                 <header className="page-header">
@@ -139,7 +168,7 @@ export default class ProductForm extends Component {
                                 disabled={this.state.edit}
                                 required
                             >
-                                <option>Select</option>
+                                <option value="">Select</option>
                                 {this.renderSelectCategories()}
                             </AvField>
                         </Col>
@@ -149,12 +178,27 @@ export default class ProductForm extends Component {
                             <AvField name="description"
                                 label="Description"
                                 placeholder="Enter the Product Description"
-                                maxLength="15"
+                                maxLength="50"
                                 value={this.state.product.description}
                                 onChange={(event, value) => this.genericChange("description", value)}
                                 required
                                 disabled={this.state.edit}
                             />
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col md="12">
+                            <AvField name="image"
+                                label="Image"
+                                type="file"
+                                onChange={(e) => this._handleImageChange(e)}
+                                required
+                            />
+                        </Col>
+                    </Row>
+                    <Row className="ml-5 mt-3 mb-5">
+                        <Col>
+                            {$imagePreview}
                         </Col>
                     </Row>
 

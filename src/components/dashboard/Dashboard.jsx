@@ -56,6 +56,7 @@ export default observer(
             productsStorage.totalPrice += product.price;
 
             Store.cart.totalItems = productsStorage.totalItems;
+            Store.cart.totalPrice = productsStorage.totalPrice;
 
             localStorage.setItem("cart", JSON.stringify(productsStorage));
         }
