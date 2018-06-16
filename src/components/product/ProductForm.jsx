@@ -20,10 +20,10 @@ export default class ProductForm extends Component {
                 description: '',
                 price: '',
                 category: {},
-                image: null
+                image: ''
             },
             categories: [],
-            file: '', 
+            file: '',
             imagePreviewUrl: '',
             edit: params.edit === undefined && params.id !== undefined
         }
@@ -58,7 +58,7 @@ export default class ProductForm extends Component {
     getById(id) {
         axios.get(`${URL}/product/${id}`)
             .then(response => {
-                this.setState({ ...this.state, product: response.data.data });
+                this.setState({ ...this.state, product: response.data.data, imagePreviewUrl: 'data:image/jpeg;base64,' + response.data.data.image });
             });
     }
 
@@ -91,7 +91,16 @@ export default class ProductForm extends Component {
         reader.onloadend = () => {
             this.setState({
                 file: file,
-                imagePreviewUrl: reader.result
+                imagePreviewUrl: reader.result,
+                product: {
+                    id: this.state.product.id,
+                    name: this.state.product.name,
+                    brand: this.state.product.brand,
+                    description: this.state.product.description,
+                    price: this.state.product.price,
+                    category: this.state.product.category,
+                    image: reader.result.replace(/^data:image\/[a-z]+;base64,/, "")
+                }
             });
         }
 
@@ -104,7 +113,7 @@ export default class ProductForm extends Component {
         let { imagePreviewUrl } = this.state;
         let $imagePreview = null;
         if (imagePreviewUrl) {
-            $imagePreview = (<img src={imagePreviewUrl} style={{textAlign: 'center', margin: '5px 15px', height: '200px', width: '400px'}} />);
+            $imagePreview = (<img src={imagePreviewUrl} style={{ textAlign: 'center', margin: '5px 15px', height: '200px', width: '400px' }} />);
         } else {
             $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
         }
